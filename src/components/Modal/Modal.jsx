@@ -3,7 +3,7 @@ import css from './Modal.module.css';
 import PropTypes from 'prop-types';
 
 export class Modal extends Component {
-  closeByEsc = e => {
+  closeWithEsc = e => {
     if (e.code === 'Escape') {
       this.props.closeModal();
     }
@@ -16,11 +16,11 @@ export class Modal extends Component {
   };
 
   componentDidMount() {
-    window.addEventListener('keydown', this.closeByEsc);
+    window.addEventListener('keydown', this.closeWithEsc);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.closeByEsc);
+    window.removeEventListener('keydown', this.closeWithEsc);
   }
 
   render() {
