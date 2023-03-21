@@ -15,6 +15,7 @@ export class App extends Component {
     isLoading: false,
     modalImage: '',
     showModal: false,
+    totalHits:'',
   };
 
   componentDidUpdate(_, prevState) {
@@ -24,12 +25,13 @@ export class App extends Component {
     if (prevState.searchQuery !== this.state.searchQuery ||
         prevState.page !== this.state.page) {
       this.setState({ isLoading: true});
+      
       this.getPhotos();
     }
   }
 
   async getPhotos() {
-    const { searchQuery, page } = this.state;
+    const { searchQuery, page, photos } = this.state;
     this.setState({ isLoading: true });
 
     try {
@@ -40,10 +42,16 @@ export class App extends Component {
        image,
        modalImage,
      }));
-     console.log(arrayPhotos())
+
+    //  console.log(response.data.totalHits)
       this.setState(prevState => ({
         photos: [...prevState.photos, ...arrayPhotos()],
       }));
+
+      this.setState({ totalHits: response.data.totalHits })
+
+      
+    
       if (!response.data.hits.length) {
         return Promise.reject(
           new Error(
@@ -82,7 +90,7 @@ export class App extends Component {
   };
 
   render() {
-    const { photos, isLoading, showModal, modalImage } = this.state;
+    const { photos, isLoading, showModal, modalImage, totalHits} = this.state;
 
     return (
       <>
@@ -90,7 +98,7 @@ export class App extends Component {
         <ImageGallery photos={photos} openModal={this.openModal} />
         {showModal && <Modal image={modalImage} closeModal={this.closeModal} />}
         {isLoading && <Loader />}
-        {photos.length > 0 && <Button handleClick={this.loadMore} />}
+        {totalHits>photos.length && <Button handleClick={this.loadMore} />}
         <ToastContainer autoClose={1488} />
       </>
     );
