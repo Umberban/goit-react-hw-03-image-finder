@@ -15,7 +15,7 @@ export class App extends Component {
     isLoading: false,
     modalImage: '',
     showModal: false,
-    totalHits:'',
+    totalHits: '',
   };
 
   componentDidUpdate(_, prevState) {
@@ -98,7 +98,7 @@ export class App extends Component {
         <ImageGallery photos={photos} openModal={this.openModal} />
         {showModal && <Modal image={modalImage} closeModal={this.closeModal} />}
         {isLoading && <Loader />}
-        {totalHits>photos.length && <Button handleClick={this.loadMore} />}
+        {<Button handleClick={this.loadMore} totalHits={totalHits} photos={photos.length} />}
         <ToastContainer autoClose={1488} />
       </>
     );
