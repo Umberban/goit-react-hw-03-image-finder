@@ -31,7 +31,7 @@ export class App extends Component {
   }
 
   async getPhotos() {
-    const { searchQuery, page, photos } = this.state;
+    const { searchQuery, page} = this.state;
     this.setState({ isLoading: true });
 
     try {
